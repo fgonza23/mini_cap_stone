@@ -1,4 +1,4 @@
-class Api::ProductsController < ApplicationController
+
 
   def index
     @products = Product.all
@@ -15,11 +15,13 @@ class Api::ProductsController < ApplicationController
     @product = Product.new(
                             name: params[:name],
                             price: params[:price],
-                            image_url: params[:img_url],
-                            description: params[:description]                            
+                            image_url: params[:img_url],                            description: params[:description]                            
                             )
-    @product .save
+   if @product .save
     render 'show.json.jbuilder'
+   else
+    render json: {errors: @product.errors.full_messages}, status: :unprocessable_entity
+   end
   end
 
   def update
@@ -30,8 +32,11 @@ class Api::ProductsController < ApplicationController
     @product.image_url = params[:id] || @product.image_url
     @product.description = params[:id] || @product.description
 
-    @product.save
+   if @product.save
     render "show.json.jbuilder"
+   else
+    render json: {errors: @product.errors.full_messages }, status: :unprocessable_entity
+   end
   end
 
   def destroy
