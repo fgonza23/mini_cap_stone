@@ -58,11 +58,8 @@ GEM
     erubi (1.7.1)
     execjs (2.7.0)
     ffi (1.9.25)
-    gdata (1.1.2)
     globalid (0.4.1)
       activesupport (>= 4.2.0)
-    gwt (0.0.2)
-      gdata
     http (3.3.0)
       addressable (~> 2.3)
       http-cookie (~> 1.0)
@@ -77,6 +74,7 @@ GEM
     jbuilder (2.7.0)
       activesupport (>= 4.2.0)
       multi_json (>= 1.2)
+    jwt (2.1.0)
     listen (3.1.5)
       rb-fsevent (~> 0.9, >= 0.9.4)
       rb-inotify (~> 0.9, >= 0.9.7)
@@ -177,9 +175,9 @@ DEPENDENCIES
   bcrypt (~> 3.1.7)
   bootsnap (>= 1.1.0)
   byebug
-  gwt
   http
   jbuilder (~> 2.5)
+  jwt
   listen (>= 3.0.5, < 3.2)
   pg (>= 0.18, < 2.0)
   puma (~> 3.11)
