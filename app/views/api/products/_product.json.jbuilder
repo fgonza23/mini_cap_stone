@@ -3,12 +3,13 @@ json.name product.name
 json.price product.price
 json.tax product.tax
 json.total product.total
-json.image_url product.image_url
+# json.image_url product.image_url
 json.description product.description
 json.discounted product.is_discounted?
 
-json.images do
-  json.array! products, partial: 'api/images/image', as: :image
+# json.images do
+#   json.array! products, partial: 'api/images/image', as: :image
+# end
 
 json.formatted do
   json.price number_to_currency(product.price)
@@ -16,8 +17,8 @@ json.formatted do
   json.total number_to_currency(product.total)
 end
 
-json.current_user
+json.current_user current_user
 
-json.supplier do
-  json.partial! product.supplier, partial: 'api/suppliers/supplier', as: :supplier
-end
+# json.supplier do
+#   json.partial! product.supplier, partial: 'api/suppliers/supplier', as: :supplier
+# end
