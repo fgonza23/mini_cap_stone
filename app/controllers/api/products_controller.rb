@@ -1,10 +1,20 @@
 class Api::ProductsController < ApplicationController
+  before_action :authenticate_admin, only: [:index, :show]
 
 
 
   def index
+    search_term = params[:search]
+    sort_attribute = params[:sort]
+    sort_order = params[:sort_order]
 
     @products = Product.all
+
+    category_name = params[:category]
+    if category_name
+      category = Category.find_by(name: category_name)
+      @products = category.products
+    end
 
     search_term = params[:search]
 
@@ -36,17 +46,17 @@ class Api::ProductsController < ApplicationController
   end 
 
   def create
-    @product = Product.new(
+      @product = Product.new(
                             name: params[:name],
                             price: params[:price],
-                            image_url: params[:img_url],                            
+                            # image_url: params[:img_url],                            
                             description: params[:description]                            
                             )
-   if @product .save
-    render 'show.json.jbuilder'
-   else
-    render json: {errors: @product.errors.full_messages}, status: :unprocessable_entity
-   end
+     if @product .save
+      render 'show.json.jbuilder'
+     else
+      render json: {errors: @product.errors.full_messages}, status: :unprocessable_entity
+     end
   end
 
   def update
