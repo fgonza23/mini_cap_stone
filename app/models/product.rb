@@ -1,5 +1,6 @@
 
 class Product < ApplicationRecord
+
  validates :name, presence: true
  validates :name, uniqueness: true
  validates :description, presence: true
@@ -15,6 +16,9 @@ class Product < ApplicationRecord
   has_many :product_categories
   has_many :categories, through: :product_categories
 
+  has_many :carted_products
+  has_many :orders, through: :carted_products
+  has_many :users, through: :carted_products
 
   def is_discounted? 
     price < 10 
