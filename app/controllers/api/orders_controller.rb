@@ -11,15 +11,24 @@ class Api::OrdersController < ApplicationController
   end
 
   def create
-    carted_products = current_user.carted_products.where(status: "Carted")
-    @order = Order.new(
-                        user_id: current_user.id,
-                        # product_id: params[:product_id],
-                        # quantity: params[:quantity]
-                      )
+    if current_user
+    carted_products = current_user.cart
+    @order = Order.new(user_id: current_user.id)
 
-    @order.build_total
+    else  
+      render json: [], status: :unathorized 
+    end
+
+
+    @order.calculate
+    @order.tax = @order.subtotal * 0.09
+    @order.total = @order.subtotal + @order.tax
+
+
+   
     @order.save
+
+    carted_products.update_all(status: 'purchased', order_id: @order_id)
 
     render 'show.json.jbuilder'
   end

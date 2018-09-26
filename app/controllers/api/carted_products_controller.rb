@@ -1,12 +1,10 @@
 class Api::CartedProductsController < ApplicationController
+  before_action :authenticate_user
 
   def index
-    if current_user
-      @carted_products = current_user.carted_products.where(status: "Carted")
+      @carted_products = current_user.cart
       render 'index.json.jbuilder'
-    else
-      render json: [], status: :unathorized
-    end
+    
   end
 
 
@@ -15,7 +13,7 @@ class Api::CartedProductsController < ApplicationController
                                         user_id: current_user.id,
                                         product_id: params[:product_id],
                                         quantity: params[:quantity],
-                                        status: "Carted"
+                                        status: "carted"
                                         )
 
     @carted_product.save
@@ -23,7 +21,9 @@ class Api::CartedProductsController < ApplicationController
 
   end
 
-
-
-
+  def destroy
+    @carted_product = CartedProduct.find(params[:id])
+    @carted_product.update(status: 'removed')
+    render json: {status: "Product was removed from cart."}
+  end
 end
