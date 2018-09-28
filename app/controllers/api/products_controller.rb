@@ -1,5 +1,6 @@
 class Api::ProductsController < ApplicationController
-  before_action :authenticate_admin, only: [:index, :show]
+  # before_action :authenticate_admin, only: [:index, :show]
+  
 
 
 
@@ -50,7 +51,8 @@ class Api::ProductsController < ApplicationController
                             name: params[:name],
                             price: params[:price],
                             # image_url: params[:img_url],                            
-                            description: params[:description]                            
+                            description: params[:description],
+                            supplier_id: params[:supplier_id]                            
                             )
      if @product .save
       render 'show.json.jbuilder'
