@@ -1,4 +1,4 @@
-class Api::ProductsController < ApplicationController
+dclass Api::ProductsController < ApplicationController
   # before_action :authenticate_admin, only: [:index, :show]
   
 
